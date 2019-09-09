@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index"
+    "start": "node index",
+    "migrate": "knex migrate:latest",
+    "unmigrate": "knex migrate:rollback"
   },
   "repository": {
     "type": "git",

@@ -1,4 +1,4 @@
-const db = require("../data/dbConfig.js");
+const db = require("../data/db.js");
 
 function getAllTodos() {
   return db("todo");
