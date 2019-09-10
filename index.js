@@ -1,6 +1,7 @@
 const express = require("express");
 
-const { getAllTodos, addTodo } = require("./models/todo"); // import helper functions from Todo model
+const db = require("./data/db.js");
+
 const app = express();
 
 app.use(express.json());
@@ -11,7 +12,7 @@ app.use(express.json());
  * PURPOSE: Get all tasks
  */
 app.get("/todo", async (req, res) => {
-  const todos = await getAllTodos();
+  const todos = await db("todo");
   res.json({ todos });
 });
 
@@ -22,7 +23,12 @@ app.get("/todo", async (req, res) => {
  */
 app.post("/todo", async (req, res) => {
   const { task } = req.body;
-  const newTodo = await addTodo({ task });
+  const newTodo = await db("todo")
+    .insert(task)
+    .then(item => {
+      return item.rowCount;
+    });
+    
   if (newTodo === 1) {
     return res.status(201).json({ message: "Todo created successfully" });
   }
